@@ -1,8 +1,10 @@
 package com.example.nibm;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,15 @@ public class UpdateActivity extends AppCompatActivity {
 
         getAndSetIntentData();
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(name);
+            Log.d("YourActivity", "Up button enabled");
+        } else {
+            Log.e("YourActivity", "Action bar is null");
+        }
+
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,9 +55,6 @@ public class UpdateActivity extends AppCompatActivity {
                 mydb.updateData(id, index, name, age, gender, mobile, home);
             }
         });
-
-
-
     }
 
     void getAndSetIntentData (){

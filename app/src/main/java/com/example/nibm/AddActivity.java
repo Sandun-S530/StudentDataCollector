@@ -1,8 +1,10 @@
 package com.example.nibm;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,15 @@ public class AddActivity extends AppCompatActivity {
         mNo = findViewById(R.id.mNo);
         pmNo = findViewById(R.id.pmNo);
         add_button = findViewById(R.id.add_button);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Add Student");
+            Log.d("YourActivity", "Up button enabled");
+        } else {
+            Log.e("YourActivity", "Action bar is null");
+        }
 
         add_button.setOnClickListener(new View.OnClickListener() {
 
