@@ -10,16 +10,16 @@ import android.widget.Toast;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText index_input, name_input, age_input, gender_input, mobile_input, home_input;
+    EditText id_input, index_input, name_input, age_input, gender_input, mobile_input, home_input;
     Button update_button;
-
-    String id, index, name, age, gender, mobile, home;
+    String id, index ,name ,age, gender, mobile, home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        id_input = findViewById(R.id.id);
         index_input = findViewById(R.id.index2);
         name_input = findViewById(R.id.name2);
         age_input = findViewById(R.id.age2);
@@ -34,6 +34,7 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper mydb = new MyDatabaseHelper(UpdateActivity.this);
+                id = id_input.getText().toString().trim();
                 index = index_input.getText().toString().trim();
                 name = name_input.getText().toString().trim();
                 age = age_input.getText().toString().trim();
@@ -67,6 +68,7 @@ public class UpdateActivity extends AppCompatActivity {
             home = getIntent().getStringExtra("home");
 
             //Setting Intent Data
+            id_input.setText(id);
             index_input.setText(index);
             name_input.setText(name);
             age_input.setText(age);

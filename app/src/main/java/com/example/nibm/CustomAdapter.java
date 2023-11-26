@@ -1,5 +1,6 @@
 package com.example.nibm;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,12 +16,14 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
+    private final Activity activity;
     private Context context;
     private ArrayList id, index, name, age, gender, mNo, pmNo;
 
-    CustomAdapter(Context context, ArrayList id, ArrayList index, ArrayList name, ArrayList age, ArrayList gender, ArrayList mNo,
+    CustomAdapter(Activity activity, Context context, ArrayList id, ArrayList index, ArrayList name, ArrayList age, ArrayList gender, ArrayList mNo,
                   ArrayList pmNo) {
 
+        this.activity = activity;
         this.context = context;
         this.id = id;
         this.index = index;
@@ -58,7 +61,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 intent.putExtra("gender", String.valueOf(gender.get(position)));
                 intent.putExtra("mobile", String.valueOf(mNo.get(position)));
                 intent.putExtra("home", String.valueOf(pmNo.get(position)));
-                context.startActivity(intent);
+                activity.startActivityForResult(intent, 1);
             }
         });
 

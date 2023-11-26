@@ -34,8 +34,8 @@ public class AddActivity extends AppCompatActivity {
                         name.getText().toString().trim(),
                         age.getText().toString().trim(),
                         gender.getText().toString().trim(),
-                        Integer.valueOf(mNo.getText().toString().trim()),
-                        Integer.valueOf(pmNo.getText().toString().trim()));
+                        mNo.getText().toString().trim(),
+                        pmNo.getText().toString().trim());
             }
         });
     }

@@ -39,8 +39,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                                 COLUMN_NAME + " TEXT, " +
                                 COLUMN_AGE + " TEXT, " +
                                 COLUMN_GENDER + " TEXT, " +
-                                COLUMN_MOBILE + " INTEGER, " +
-                                COLUMN_PARENT + " INTEGER); ";
+                                COLUMN_MOBILE + " TEXT, " +
+                                COLUMN_PARENT + " TEXT); ";
         db.execSQL(query);
 
     }
@@ -50,7 +50,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    void addStudent (String index, String name, String age, String gender, int mobile, int home) {
+    void addStudent (String index, String name, String age, String gender, String mobile, String home) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -91,7 +91,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
          cv.put(COLUMN_MOBILE, mobile);
          cv.put(COLUMN_PARENT, home);
 
-        long result = db.update(TABLE_NAME, cv, "_id?", new String[]{row_id});
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
         if(result == -1){
             Toast.makeText(context, "Failed to Update", Toast.LENGTH_SHORT).show();
         }else{

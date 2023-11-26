@@ -1,5 +1,6 @@
 package com.example.nibm;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,9 +51,18 @@ public class AdminPanel extends AppCompatActivity {
 
         StoreDataInArrays();
 
-        customAdapter = new CustomAdapter(AdminPanel.this, id, index, name, age, gender, mNo, pmNo);
+        customAdapter = new CustomAdapter(AdminPanel.this, this, id, index, name, age, gender, mNo, pmNo);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(AdminPanel.this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1){
+            recreate();
+        }
     }
 
     void StoreDataInArrays(){
