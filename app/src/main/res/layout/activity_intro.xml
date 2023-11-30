@@ -43,7 +43,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="lorem ipsem lorem ipsem lorem\n lorem ipsem lorem ipsem lorem\n lorem ipsem lorem ipsem lorem"
+        android:text="Student Registration System"
         android:textSize="20sp"
         android:textColor="#8b8b8b"
         app:layout_constraintStart_toStartOf="@+id/textView"
