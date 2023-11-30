@@ -55,8 +55,18 @@ public class UpdateActivity extends AppCompatActivity {
                 gender = gender_input.getText().toString().trim();
                 mobile = mobile_input.getText().toString().trim();
                 home = home_input.getText().toString().trim();
-                mydb.updateData(id, index, name, age, gender, mobile, home);
-                finish();
+
+                // Check if a record with the same index (excluding the current record) already exists before updating
+                if (mydb.isIndexAlreadyExists(id, index)) {
+                    Toast.makeText(UpdateActivity.this, "Record with the same index already exists. Update failed.", Toast.LENGTH_SHORT).show();
+                }
+                if (index.isEmpty() || name.isEmpty() || age.isEmpty() || gender.isEmpty() || mobile.isEmpty() || home.isEmpty()) {
+                    Toast.makeText(UpdateActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    mydb.updateData(id, index, name, age, gender, mobile, home);
+                    finish();
+                }
             }
         });
 

@@ -60,13 +60,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return;
         }
 
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_INDEX, index);
-        cv.put(COLUMN_NAME, name);
-        cv.put(COLUMN_AGE, age);
-        cv.put(COLUMN_GENDER, gender);
-        cv.put(COLUMN_MOBILE, mobile);
-        cv.put(COLUMN_PARENT, home);
+        if ( index.isEmpty() || name.isEmpty() || age.isEmpty() || gender.isEmpty() || mobile.isEmpty() || home.isEmpty()) {
+            Toast.makeText(context, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+            ContentValues cv = new ContentValues();
+            cv.put(COLUMN_INDEX, index);
+            cv.put(COLUMN_NAME, name);
+            cv.put(COLUMN_AGE, age);
+            cv.put(COLUMN_GENDER, gender);
+            cv.put(COLUMN_MOBILE, mobile);
+            cv.put(COLUMN_PARENT, home);
 
         long result = db.insert(TABLE_NAME, null, cv);
 
@@ -92,8 +96,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    Cursor readAllData (){
-        String query = "SELECT * FROM " + TABLE_NAME;
+    Cursor readAllDataOrderedByIndex (){
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_INDEX;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -103,6 +107,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public boolean isIndexAlreadyExists(String currentId, String index) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ID};
+        String selection = COLUMN_INDEX + "=? AND " + COLUMN_ID + "!=?";
+        String[] selectionArgs = {index, currentId};
+
+        try (Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+            return cursor.getCount() > 0;
+        }
+    }
     void updateData(String row_id, String index, String name, String age, String gender, String mobile, String home){
          SQLiteDatabase db = this.getWritableDatabase();
          ContentValues cv = new ContentValues();

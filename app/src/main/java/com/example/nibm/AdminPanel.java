@@ -72,7 +72,7 @@ public class AdminPanel extends AppCompatActivity {
     }
 
     void StoreDataInArrays(){
-        Cursor cursor = myDB.readAllData();
+        Cursor cursor = myDB.readAllDataOrderedByIndex();
         if(cursor.getCount() == 0){
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }else{
