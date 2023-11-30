@@ -1,8 +1,10 @@
 package com.example.nibm;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +15,7 @@ import android.widget.Toast;
 public class UpdateActivity extends AppCompatActivity {
 
     EditText id_input, index_input, name_input, age_input, gender_input, mobile_input, home_input;
-    Button update_button;
+    Button update_button, delete_button;
     String id, index ,name ,age, gender, mobile, home;
 
     @Override
@@ -29,13 +31,14 @@ public class UpdateActivity extends AppCompatActivity {
         mobile_input = findViewById(R.id.mNo2);
         home_input = findViewById(R.id.pmNo2);
         update_button = findViewById(R.id.update_button);
+        delete_button = findViewById(R.id.delete_button);
 
         getAndSetIntentData();
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(name);
+            actionBar.setTitle(index);
             Log.d("YourActivity", "Up button enabled");
         } else {
             Log.e("YourActivity", "Action bar is null");
@@ -53,6 +56,14 @@ public class UpdateActivity extends AppCompatActivity {
                 mobile = mobile_input.getText().toString().trim();
                 home = home_input.getText().toString().trim();
                 mydb.updateData(id, index, name, age, gender, mobile, home);
+                finish();
+            }
+        });
+
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDialog();
             }
         });
     }
@@ -87,5 +98,26 @@ public class UpdateActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    void confirmDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete " + index + " ?");
+        builder.setMessage("Are you sure you want to delete this record ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+                myDB.deleteOneRow(id);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show();
     }
 }

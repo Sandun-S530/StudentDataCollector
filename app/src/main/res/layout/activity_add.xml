@@ -89,8 +89,6 @@
                 android:layout_marginBottom="16dp"
                 android:hint="Age"/>
 
-
-
             <EditText
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
@@ -104,7 +102,6 @@
                 android:textSize="18sp"
                 android:layout_marginBottom="16dp"
                 android:hint="Gender"/>
-
 
             <EditText
                 android:id="@+id/mNo"

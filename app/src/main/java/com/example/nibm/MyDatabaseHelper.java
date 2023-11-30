@@ -2,6 +2,7 @@ package com.example.nibm;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -35,7 +36,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME +
                         " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                COLUMN_INDEX + " TEXT, " +
+                                COLUMN_INDEX + " TEXT UNIQUE, " +
                                 COLUMN_NAME + " TEXT, " +
                                 COLUMN_AGE + " TEXT, " +
                                 COLUMN_GENDER + " TEXT, " +
@@ -52,8 +53,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     void addStudent (String index, String name, String age, String gender, String mobile, String home) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
 
+        // Check if the index already exists
+        if (!isIndexUnique(index)) {
+            Toast.makeText(context, "Index must be unique", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ContentValues cv = new ContentValues();
         cv.put(COLUMN_INDEX, index);
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_AGE, age);
@@ -67,8 +74,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, "Successfully Added", Toast.LENGTH_SHORT).show();
+            // Redirect to the main activity
+            Intent intent = new Intent(context, AdminPanel.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
         }
     }
+
+    private boolean isIndexUnique(String index) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, new String[]{COLUMN_INDEX}, COLUMN_INDEX + "=?",
+                new String[]{index}, null, null, null);
+        boolean isUnique = cursor.getCount() == 0;
+        cursor.close();
+        return isUnique;
+    }
+
 
     Cursor readAllData (){
         String query = "SELECT * FROM " + TABLE_NAME;
@@ -97,5 +119,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    void deleteOneRow(String row_id){
+         SQLiteDatabase db = this.getWritableDatabase();
+         long result = db.delete(TABLE_NAME, "_id=?", new String[]{row_id});
+         if(result == -1){
+             Toast.makeText(context, "Failed to Delete", Toast.LENGTH_SHORT).show();
+         }else{
+             Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
+         }
+    }
+
+    void deleteAllData(){
+         SQLiteDatabase db = this.getWritableDatabase();
+         db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 }
