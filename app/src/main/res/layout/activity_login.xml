@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2">
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/imageView"
@@ -20,12 +20,12 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hi \n Please Login"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:text="Hi \n Please Login"
+        android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -187,15 +187,15 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
+            style="@android:style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
-            android:text="Login"
             android:background="@drawable/button_background"
-            style="@android:style/Widget.Button"
+            android:text="Login"
             android:textColor="#ffffff"
             android:textSize="25sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
