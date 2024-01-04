@@ -8,13 +8,16 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText id_input, index_input, name_input, age_input, gender_input, mobile_input, home_input;
+    EditText id_input, index_input, name_input, age_input, mobile_input, home_input;
+    Spinner gender_input;
     Button update_button, delete_button;
     String id, index ,name ,age, gender, mobile, home;
 
@@ -47,12 +50,18 @@ public class UpdateActivity extends AppCompatActivity {
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Get the selected item from the Spinner
+                String selectedGender = String.valueOf(gender_input.getSelectedItem());
+
+                // Trim the value
+                String trimmedGender = selectedGender.trim();
                 MyDatabaseHelper mydb = new MyDatabaseHelper(UpdateActivity.this);
                 id = id_input.getText().toString().trim();
                 index = index_input.getText().toString().trim();
                 name = name_input.getText().toString().trim();
                 age = age_input.getText().toString().trim();
-                gender = gender_input.getText().toString().trim();
+                gender = trimmedGender;
                 mobile = mobile_input.getText().toString().trim();
                 home = home_input.getText().toString().trim();
 
@@ -101,13 +110,32 @@ public class UpdateActivity extends AppCompatActivity {
             index_input.setText(index);
             name_input.setText(name);
             age_input.setText(age);
-            gender_input.setText(gender);
             mobile_input.setText(mobile);
             home_input.setText(home);
+
+            setupGenderSpinner(gender);
 
         }else{
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setupGenderSpinner(String selectedGender) {
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.genders_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        gender_input.setAdapter(adapter);
+
+        // Find the position of 'selectedGender' in the adapter
+        int position = adapter.getPosition(selectedGender);
+
+        // Set the selection to the found position
+        gender_input.setSelection(position);
     }
 
     void confirmDialog(){

@@ -89,19 +89,17 @@
                 android:layout_marginBottom="16dp"
                 android:hint="Age"/>
 
-            <EditText
-                android:id="@+id/gender"
+            <Spinner
+                android:id="@+id/genderSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:inputType="text"
+                android:layout_marginBottom="16dp"
                 android:padding="12dp"
                 android:textColor="#707070"
-                android:textSize="18sp"
-                android:layout_marginBottom="16dp"
-                android:hint="Gender"/>
+                android:textSize="18sp"/>
+
 
             <EditText
                 android:id="@+id/mNo"

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NIBM</string>
+    <string name="choose_gender">Choose Gender</string>
 </resources>

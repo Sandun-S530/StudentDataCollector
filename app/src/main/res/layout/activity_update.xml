@@ -114,12 +114,11 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/gender2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="12dp"
-
                 android:ems="10"
                 android:inputType="text"
                 android:padding="12dp"
